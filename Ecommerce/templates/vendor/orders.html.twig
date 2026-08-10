@@ -1,0 +1,40 @@
+{% extends 'common.html.twig' %}
+
+{% block content %}
+
+<div class="container mt-4">
+      <h1 class="text-center">Ordini Ricevuti</h1>
+      <div class="table-container">
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Cognome</th>
+              <th>Indirizzo</th>
+              <th>Città</th>
+              <th>Numero Ordine</th>
+              <th>Nome Prodotto</th>
+              <th>Quantità</th>
+              <th>Totale (€)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Ordini -->
+            {% for order in orders %}
+            <tr>
+              <td>{{ order.nome }}</td>
+              <td>{{ order.cognome }}</td>
+              <td>{{ order.indirizzo }}</td>
+              <td>{{ order.citta }}</td>
+              <td>{{ order.codiceOrdine }}</td>
+              <td>{{ order.nomeProdotto }}</td>
+              <td>{{ order.quantita }}</td>
+              <td>{{ order.totaleCosto }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+ {% endblock content %}

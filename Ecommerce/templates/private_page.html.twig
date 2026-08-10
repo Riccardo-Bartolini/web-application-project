@@ -1,0 +1,40 @@
+{% extends "common.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 col-12 p-4">
+            <!--Start ordine singolo-->
+            {% for ordine in ordini %}
+            <div class="row bg-light text-dark p-2 rounded mt-3">
+                <div class="col-4">
+                {{ordine.indirizzo}} {{ordine.citta}} <hr> Effettuato il <br> {{ordine.data}} <hr> <span class="text-success">{{ordine.prezzoTotale}}€</span>
+                </div>
+                <div class="col-8">
+                    <ul class="list-group">
+                        {% for product in ordine.productsAssociated %}
+                        <li class="list-group-item">
+                            <a href="/prodotto?id={{product.id}}">{{product.name}} {{product.marca}}</a>
+                        </li>
+                        {% endfor %}
+                      </ul>
+                </div>
+            </div>
+           <!--Fine ordine singolo-->
+           {% endfor %}
+        </div>
+        <div class="col-md-7 col-12 p-4">
+            <h2> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
+                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5z"/>
+                </svg>
+                I tuoi dati
+            </h2>
+            <p class="mt-3 fs-3">{{session.nome}} {{session.cognome}}</p>
+            {% if session.venditore == true %}
+            <p class="text-success mt-3 fs-3">Venditore</p>
+            {% endif %}
+        </div>
+      </div>
+</div>
+{% endblock content %}

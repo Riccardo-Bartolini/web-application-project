@@ -1,0 +1,87 @@
+{% extends 'common.html.twig' %}
+
+{% block content %}
+
+<div class="container mt-4">
+  <div class="row">
+    <!-- Listino Prodotti -->
+    <div class="col-lg-6">
+      <h1 class="text-center">Listino Prodotti</h1>
+      <div class="table-container">
+        <table class="table table-dark table-hover" id="productTable">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Codice</th>
+              <th>Marca</th>
+              <th>Condizioni</th>
+              <th>Prezzo (€)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr class="product-row">
+              <td>{{ product.name }}</td>
+              <td>{{ product.id }}</td>
+              <td>{{ product.marca }}</td>
+              <td>{{ product.condizioni }}</td>
+              <td>{{ product.unitCost }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Form Inserimento e Modifica -->
+    <div class="col-lg-6">
+      <!-- Inserimento Nuovo Prodotto -->
+      <h2>Inserimento Nuovo Prodotto</h2>
+      <form method="POST" enctype="multipart/form-data">
+        <label class="d-none" for="id">id</label>
+        <input type="hidden" name="id" id="id" value="0"//>
+        <div class="mb-3">
+          <label for="productPrice" class="form-label">Prezzo (€)</label>
+          <input type="number" class="form-control" id="productPrice" name="unitCost" required/>
+        </div>
+        <div class="mb-3">
+          <label for="productName" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="productName" name="name" required/>
+        </div>
+        <div class="mb-3">
+          <label for="productBrand" class="form-label">Marca</label>
+          <input type="text" class="form-control" id="productBrand" name="marca" required/>
+        </div>
+        <div class="mb-3">
+          <label for="descrizione" class="form-label">Descrizione</label>
+          <textarea type="text" class="form-control" id="descrizione" name="descrizione" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="productCondition" class="form-label">Condizioni</label>
+          <select class="form-select" id="productCondition" name="condizioni">
+            <option value="Nuovo">Nuovo</option>
+            <option value="Usato - come nuovo">Usato - come nuovo</option>
+            <option value="Usato - condizioni discrete">Usato - condizioni discrete</option>
+            <option value="Usato - condizioni pessime">Usato - condizioni pessime</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="formFile1" class="form-label">Immagine 1</label>
+          <input class="form-control" type="file" id="formFile1" name="imgPath1">
+        </div>
+        <div class="mb-3">
+          <label for="formFile2" class="form-label">Immagine 2</label>
+          <input class="form-control" type="file" id="formFile2" name="imgPath2">
+        </div>
+        <div class="mb-3">
+          <label for="formFile3" class="form-label">Immagine 3</label>
+          <input class="form-control" type="file" id="formFile3" name="imgPath3">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Inserisci Prodotto</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

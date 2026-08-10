@@ -1,0 +1,94 @@
+<div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content bg-dark">
+        <div class="modal-header">
+          <p class="modal-title fs-5" id="notificationModalLabel">Le tue notifiche</p>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="notifications-container">
+
+            {% for notifica in notifiche %}
+            <!--Start one notification -->
+            <div class="notification mt-2 p-1 border border-1 border-light rounded-2">
+              <div class="notification-header">
+                <p class="text-start p-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calendar-range" viewBox="0 0 16 16">
+                    <path d="M9 7a1 1 0 0 1 1-1h5v2h-5a1 1 0 0 1-1-1M1 9h4a1 1 0 0 1 0 2H1z"/>
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                  </svg>
+                  {% if not notifica.letta %}
+                  <strong class="text-danger" id="newNotification{{ notifica.id }}">Nuova notifica</strong>
+                  {% endif %}
+                </p>
+              </div>
+              {% if not notifica.letta %}
+              <button 
+                class="btn btn-primary btn-sm mark-as-read" id="btnMarkAsRead{{notifica.id}}"
+                data-id="{{ notifica.id }}">Segna come letta
+              </button>
+              {% endif %}
+              <p class="text">{{notifica.testo}}</p>
+              <p class="text text-end text-secondary">{{notifica.data}}</p>
+            </div>
+            <!--End one notification -->
+            {% endfor %}
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Esci</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    // Trova tutti i pulsanti "Segna come letta"
+    const buttons = document.querySelectorAll('.mark-as-read');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const notificaId = button.dataset.id;
+
+            // Invia la richiesta POST al server
+            fetch('/segna-notifica-letta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: notificaId,
+                    letta: true
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nella richiesta');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Notifica segnata come letta:', data);
+
+                // Nascondi scritta lettura
+                const notificationText = document.getElementById(`newNotification${notificaId}`);
+                if (notificationText) {
+                  notificationText.style.display = "none";
+                }
+
+                // Nascondi il pulsante
+                const buttonHidden = document.getElementById(`btnMarkAsRead${notificaId}`);
+                if (buttonHidden) {
+                  buttonHidden.style.display = "none";
+                }
+                
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+            });
+        });
+    });
+});
+  </script>

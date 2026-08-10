@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  </head>
+  <body class="bg-dark text-light">
+    <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-7 text-dark p-3 mx-auto">
+            <form method="post">
+                <h1 class="h3 mb-3 fw-normal text-light">Benvenuto nel tuo negozio di orologi </h1>
+            
+                <div class="form-floating">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required> 
+                  <label for="email">Email address</label>
+                </div>
+                
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating mt-3">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Mario" required>
+                            <label for="name">Nome</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating mt-3">
+                            <input type="text" class="form-control" name="cognome" id="cognome" placeholder="Rossi" required>
+                            <label for="cognome">Cognome</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="form-floating mt-3">
+                            <input type="text" class="form-control" name="indirizzo" id="indirizzo" placeholder="Via Alberti 4" required>
+                            <label for="indirizzo">Indirizzo</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-floating mt-3">
+                            <input type="text" class="form-control" name="citta" id="citta" placeholder="Milano" required>
+                            <label for="citta">Citt&agrave;</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-floating mt-3">
+                  <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                  <label for="password">Password</label>
+                  <p class="text-light">Superiore a 6 caratteri</p>
+                </div>
+                <div class="form-floating mt-3">
+                    <input type="password" class="form-control" name="password2" id="password2" placeholder="Ripeti Password">
+                    <label for="password2">Ripeti Password</label>
+                </div>
+            
+                <div class="form-check text-start my-3">
+                  <!-- Campo nascosto che invia "false" -->
+                  <input type="hidden" class="form-check-input" name="venditore" value="0" id="venditoreFalse">
+                  <label class="form-check-label text-light" for="venditoreFalse"></label>
+                  <!-- Checkbox che invia "true" se selezionato -->
+                  <input type="checkbox" class="form-check-input" name="venditore" id="venditore" value="1">
+                  <label class="form-check-label text-light" for="venditore">
+                    Sei un venditore?
+                  </label>
+                </div>
+                {% if error_message.password_diverse %}
+                <div class="alert alert-danger alert-dismissible w-50 mt-3" role="alert">   
+                  <div>Le password non coincidono</div>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                {% if error_message.email_in_uso %}
+                <div class="alert alert-danger alert-dismissible w-50 mt-3" role="alert">   
+                  <div>L'email usata è già in uso</div>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                {% if error_message.password_corta %}
+                <div class="alert alert-danger alert-dismissible w-50 mt-3" role="alert">   
+                  <div>La password usata è pià corta di 7 caratteri</div>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                <button class="btn btn-primary w-100 py-2 mt-3 mb-3" type="submit">Registrati</button>
+                <a href="/login" class="mt-5 mb-3 text-body-info text-light">Hai già un account? Entra</a>
+
+              </form>
+          </div>
+        </div>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+

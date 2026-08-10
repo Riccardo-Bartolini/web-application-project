@@ -1,0 +1,69 @@
+/* Common css for all pages */
+
+body {
+  font-family: "Host Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 10;
+  font-style: normal;
+  color: #F2F2F0 !important;
+}
+
+.welcome {
+  background-image: url('../images/sfondo.jpg'); /* Specifica l'immagine di sfondo */
+  background-position: center; /* Centra lo sfondo */
+  background-repeat: no-repeat; /* Evita la ripetizione dell'immagine */
+  background-size: cover; /* Ridimensiona l'immagine per coprire il contenitore */
+}
+
+/* Definizione dell'effetto fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.welcome h4 {
+  opacity: 0; /* Nasconde l'immagine inizialmente */
+  animation: fadeIn 2s ease-in-out forwards; /* Animazione al caricamento */
+}
+
+
+@media only screen and (max-width: 600px) {
+  .navbar form {
+      width: 100%;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bg-dark {
+  background-color: #373740 !important;
+}
+
+.bg-primary, .btn-primary {
+  background-color: #8C665E !important;
+  border: #8C665E !important;
+}
+
+.text-primary{
+  color: #8C665E !important;
+}
+
+/* Parallax background settings */
+.parallax {
+  background-image: url('../images/sfondo2.jpeg');
+  height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.content {
+  height: 300px; /* Contenuto normale per evidenziare l'effetto */
+}

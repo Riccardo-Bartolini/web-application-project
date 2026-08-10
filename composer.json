@@ -1,0 +1,5 @@
+{
+    "require": {
+        "codeinc/strip-accents": "^1.1"
+    }
+}

@@ -1,0 +1,112 @@
+{% extends 'common.html.twig' %}
+
+{% block content %}
+<h1 class="text-center mt-1">Catalogo Prodotti</h1>
+<div class="px-3 mt-5 row pb-4">
+    <!--START filter section-->
+    <section class="col-12 col-md-3">
+        <form method="GET">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nome orologio</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{GET.name}}" placeholder="RB 2-504"/>
+            </div>
+            <div class="mb-3">
+                <label for="marca" class="form-label">Marca</label>
+                <input type="text" class="form-control" id="marca" name="marca" value="{{GET.marca}}" placeholder="Rolex Daytona"/>
+            </div>
+            <div class="mb-3">
+                <label for="condizioni" class="form-label">Condizioni</label>
+                <select class="form-select" id="condizioni" name="condizioni">
+                    <option value="Nuovo">Nuovo</option>
+                    <option value="Usato - come nuovo">Usato - come nuovo</option>
+                    <option value="Usato - condizioni discrete">Usato - condizioni discrete</option>
+                    <option value="Usato - condizioni pessime">Usato - condizioni pessime</option>
+                  </select>
+            </div>
+            <div class="mb-3">
+                <span id="unitCostValueMin">2.5</span>
+                <label for="unitCostMin" class="form-label">Costo Minimo €</label>
+                <input type="range" class="form-range" min="0" max="100000" step="10" value="0" name="unitCostMin" id="unitCostMin"/>
+            </div>
+            <div class="mb-3">
+                <span id="unitCostValueMax">2.5</span>
+                <label for="unitCostMax" class="form-label">Costo Massimo €</label>
+                <input type="range" class="form-range" min="0" max="100000" value="0" step="10" name="unitCostMax" id="unitCostMax"/>
+            </div>
+            <button class="btn btn-primary" type="submit"> Ricerca </button>
+        </form>
+    </section>
+    <!--END filter section-->
+
+    <!--START cards section-->
+    <section class="col-12 col-md-9">
+    <div class="row">
+      {% if not_found_message %}
+      <div class="alert alert-danger alert-dismissible w-50 mt-3" role="alert">   
+        <div>Nessun risultato trovato</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+      <!--Start success di conferma aggiunta al carrello-->
+      <div class="modal fade" id="successAddedToCartModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-success">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">articolo aggiunto al carrello</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--End success di conferma aggiunta al carrello-->
+      {% for product in products %}
+        <div class="col-md-3">
+          <div class="card mt-3 p-2">
+            <img src="{{product.imgPath1}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text text-truncate">{{product.marca}} {{product.descrizione}}</p>
+            </div>
+            <div class="card-footer">
+              <a href="/prodotto?id={{product.id}}" class="card-link text-primary">Informazioni</a>
+              <a id="successAddedToCart" class="btn btn-primary mt-2" onclick="addProductToCart({{product.id}},'{{product.name}}',{{product.unitCost}},1,'{{product.imgPath1}}')" data-bs-toggle="modal" data-bs-target="#successAddedToCartModal">Aggiungi al carrello</a>
+            </div>
+          </div>
+        <!--End success di conferma aggiunta al carrello-->
+        </div>
+      {% endfor %}
+        <!-- Altre card qui -->
+      </div>
+    </section>
+    <!--END cards section -->
+</div>
+
+<script src="{{ asset('js/productDetail.js') }}" type="module"></script>
+<script>
+    // Script per mostrare il costo selezionato Mininimo
+    const unitCostMin = document.getElementById('unitCostMin');
+    const unitCostValueMin = document.getElementById('unitCostValueMin');
+
+    // Imposta il valore iniziale
+    unitCostValueMin.textContent = unitCostMin.value;
+
+    // Aggiorna il valore al cambiamento dello slider
+    unitCostMin.addEventListener('input', () => {
+        unitCostValueMin.textContent = unitCostMin.value;
+    });
+
+    // Script per mostrare il costo selezionato Massimo
+    const unitCostMax = document.getElementById('unitCostMax');
+    const unitCostValueMax = document.getElementById('unitCostValueMax');
+
+    // Imposta il valore iniziale
+    unitCostValueMax.textContent = unitCostMax.value;
+
+    // Aggiorna il valore al cambiamento dello slider
+    unitCostMax.addEventListener('input', () => {
+        unitCostValueMax.textContent = unitCostMax.value;
+    });
+</script>
+
+{% endblock content %}
+    

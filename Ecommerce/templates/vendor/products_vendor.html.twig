@@ -1,0 +1,105 @@
+{% extends 'common.html.twig' %}
+
+{% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center">Listino Prodotti</h1>
+  <lable for="searchBar" class="d-none">Cerca prodotto</lable>
+  <input type="text" id="searchBar" class="form-control mb-3" placeholder="Cerca prodotto per nome">
+  <div class="table-container">
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Codice</th>
+          <th>Marca</th>
+          <th>Condizioni</th>
+          <th>Quantità</th>
+          <th>Prezzo (€)</th>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr class="product-row">
+          <td>{{ product.name }}</td>
+          <td>{{ product.id }}</td>
+          <td>{{ product.marca }}</td>
+          <td>{{ product.condizioni }}</td>
+          <td>{{ product.quantita }}</td>
+          <td>{{ product.unitCost }}</td>
+          <td>
+            <button class="btn btn-primary btn-delete-product" data-id="{{ product.id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // Evidenziazione dei prodotti in base alla barra di ricerca
+  document.getElementById("searchBar").addEventListener("input", () => {
+    const searchValue = document.getElementById("searchBar").value.toLowerCase();
+
+    document.querySelectorAll(".product-row").forEach(row => {
+      const productName = row.getElementsByTagName("td")[0].innerText.toLowerCase();
+
+      // Rimuove sempre la classe, poi la riaggiunge se necessario
+      row.classList.remove("table-primary");
+
+      if (searchValue && productName.includes(searchValue)) {
+        row.classList.add("table-primary"); // Evidenzia solo le righe corrispondenti
+      }
+    });
+  });
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const deleteButtons = document.querySelectorAll(".btn-delete-product");
+
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const productId = this.getAttribute("data-id");
+
+        // Chiedi conferma all'utente
+        const userConfirmed = confirm("Sei sicuro di voler eliminare questo prodotto?");
+
+        if (userConfirmed) {
+          // Invio della richiesta AJAX se l'utente ha confermato
+          fetch("/elimina_prodotto", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: productId }),
+          })
+          .then((response) => {
+            if (response.ok) {
+              console.log(response)
+              // Successo: rimuovi l'elemento dal DOM o mostra un messaggio
+              console.log(`Prodotto con id ${productId} eliminato con successo`);
+              this.closest("tr").remove(); //rimuove la riga dalla tabella
+            } else {
+              console.error("Errore durante l'eliminazione del prodotto");
+            }
+          })
+          .catch((error) => {
+            console.error("Errore nella richiesta AJAX:", error);
+          });
+        } else {
+          // L'utente ha annullato l'operazione
+          console.log("Eliminazione annullata");
+        }
+      });
+    });
+  });
+</script>
+
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% extends 'common.html.twig' %}
+
+{% block content %}
+<div class="welcome">
+  <h4 class="text-light text-start fs-1" style="padding: 250px 50px;">
+    {% if isLogged %}
+    Benvenuto {{session.nome}}
+    {% else %}
+    Scegli il tuo orologio
+    {% endif %}
+    
+  </h4>
+</div>
+<div class="container mt-5">
+  <!--START banner section-->
+  <div class="row mt-3">
+      <div class="col-12 col-md-6">
+          <img src="{{ asset('images/image-banner.jpg') }}" 
+          alt="Orologio" 
+          class="img-fluid d-md-block" 
+          style="width: 100%; max-width: 600px;">
+      </div>
+      <div class="col-12 col-md-6 mt-3 align-items-center d-flex">
+          <div>
+            <p class="text-center">Benvenuti in Eterna Eleganza, il punto di riferimento per gli amanti degli orologi di lusso.
+              Offriamo una selezione esclusiva di marchi prestigiosi, icone senza tempo che uniscono artigianato e innovazione. 
+              Ogni modello è una testimonianza di raffinatezza, perfetto per chi desidera distinguersi con stile. 
+              Il nostro team di esperti è a disposizione per guidarvi nella scelta dell’orologio che meglio riflette la vostra
+              personalità. Da noi, ogni dettaglio conta: dalla qualità eccezionale al servizio personalizzato.
+              Scoprite un universo di precisione, design e prestigio, pensato per chi apprezza il valore del tempo. 
+              Visitateci per vivere un’esperienza unica e trovare il vostro prossimo capolavoro. 
+              Eterna Eleganza: il tempo, reso indimenticabile.</p>
+            <a class="btn btn-primary w-100 mx-auto" href="/catalogo_prodotti" >Visita il nostro catalogo</a>
+          </div>
+        </div>
+  </div>
+  <!--END banner section -->
+
+  <!-- Sezione Parallax -->
+  <div class="parallax mt-5"></div>
+
+  <!-- Contenuto di Scrolling -->
+  <div class="container content d-flex justify-content-center align-items-center">
+    <span>
+      <h5 class="text-center fs-1">Qualità e Stile Unico</h5>
+      <p class="text-center">Su <strong>Eterna Elefanza</strong>, ogni orologio è una combinazione di precisione, design senza tempo e materiali di alta qualità.  
+        Collaboriamo con i migliori brand e artigiani per offrirti una collezione esclusiva di orologi che si adattano perfettamente al tuo stile, sia per un look elegante che casual.
+        Investiamo nel valore dell'eccellenza, garantendo prodotti autentici e duraturi che segnano ogni momento speciale della tua vita.</p>  
+      <a class="btn btn-primary w-100 mx-auto" href="/catalogo_prodotti" >Visita il nostro catalogo</a>
+    </span>
+  </div>
+
+  <!-- Sezione Parallax -->
+  <div class="parallax mt-5"></div>
+
+  <!-- Contenuto di Scrolling -->
+  <div class="container content d-flex justify-content-center align-items-center">
+    <span>
+      <h5 class="text-center fs-1">Esperienza d'Acquisto Impeccabile</h5>
+      <p class="text-center">Acquistare su <strong>Eterna Elefanza</strong> significa affidarsi a un servizio sicuro, veloce e attento alle tue esigenze.  
+        Offriamo spedizioni rapide, pagamenti sicuri e un team di supporto dedicato per garantirti un'esperienza senza stress.  
+        Che tu stia cercando un regalo speciale o un accessorio esclusivo per te, siamo qui per aiutarti a fare la scelta giusta con fiducia.</p>  
+      <a class="btn btn-primary w-100 mx-auto" href="/catalogo_prodotti" >Visita il nostro catalogo</a>
+    </span>
+  </div>
+
+
+</div>
+
+
+
+<script src="{{ asset('js/productDetail.js') }}" type="module"></script>
+
+{% endblock content %}
+    
