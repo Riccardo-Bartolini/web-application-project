@@ -27,4 +27,4 @@ The current database configuration must be replaced with local, private credenti
 
 ## Credits
 
-Developed as a university team project by Riccardo Bartolini and a Gianmaria Di Fronzo. See the project report for the full design and implementation details.
+Developed as a university team project by Riccardo Bartolini and  Gianmaria Di Fronzo. See the project report for the full design and implementation details.
